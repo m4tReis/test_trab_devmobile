@@ -1,0 +1,10 @@
+# Scripts do Gradle Wrapper precisam manter a quebra de linha correta
+# para funcionar em Windows, Linux e macOS (vale para back/ e app/).
+**/gradlew text eol=lf
+*.bat text eol=crlf
+
+# Binarios
+*.jar binary
+*.png binary
+*.webp binary
+*.docx binary

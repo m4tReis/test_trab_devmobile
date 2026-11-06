@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.ComplexoSantosESchein" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/santos_royal_blue</item>
+        <item name="colorPrimaryVariant">@color/santos_navy_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/santos_energy_orange</item>
+        <item name="colorSecondaryVariant">@color/santos_ball_blue</item>
+        <item name="colorOnSecondary">@color/santos_graphite</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:navigationBarColor">@color/santos_graphite</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:windowBackground">@color/santos_graphite</item>
+    </style>
+</resources>

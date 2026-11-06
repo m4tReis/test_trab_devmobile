@@ -1,0 +1,103 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+// URL da API do flavor prod (RF10). Padrao: 10.0.2.2, que so funciona no emulador.
+// Para usar celulares fisicos, informe o IP da maquina que roda o back, sem editar este arquivo:
+//   - no local.properties (nao versionado):   api.base.url=http://192.168.0.10:8080/
+//   - ou na linha de comando:                 .\gradlew.bat assembleProdDebug -PapiBaseUrl=http://192.168.0.10:8080/
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+def apiBaseUrl = (project.findProperty('apiBaseUrl')
+        ?: localProperties.getProperty('api.base.url')
+        ?: 'http://10.0.2.2:8080/').toString().trim()
+if (!apiBaseUrl.endsWith('/')) {
+    apiBaseUrl = apiBaseUrl + '/'
+}
+
+android {
+    namespace 'com.santosschein.app'
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 1
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.santosschein.app"
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        mock {
+            dimension "environment"
+            applicationIdSuffix ".mock"
+            versionNameSuffix "-mock"
+            buildConfigField "String", "ENVIRONMENT", "\"mock\""
+            buildConfigField "String", "API_BASE_URL", "\"http://10.0.2.2:8080/\""
+        }
+        prod {
+            dimension "environment"
+            buildConfigField "String", "ENVIRONMENT", "\"remote\""
+            buildConfigField "String", "API_BASE_URL", "\"${apiBaseUrl}\""
+        }
+    }
+
+    buildTypes {
+        release {
+            optimization {
+                enable false
+            }
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+    testOptions {
+        unitTests.all {
+            maxParallelForks = 1
+        }
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.fragment
+    implementation libs.recyclerview
+    implementation libs.lifecycle.viewmodel
+    implementation libs.lifecycle.livedata
+    implementation libs.retrofit
+    implementation libs.retrofit.gson
+    implementation libs.okhttp
+    implementation libs.okhttp.logging.interceptor
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
+    testImplementation libs.arch.core.testing
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
+
+    androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.ext.junit
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="santos_royal_blue">#0130A5</color>
+    <color name="santos_navy_blue">#013B6E</color>
+    <color name="santos_energy_orange">#FD8802</color>
+    <color name="santos_ball_blue">#53A3D7</color>
+    <color name="santos_ice_white">#F4F4F5</color>
+    <color name="santos_blue_gray">#BFD0E4</color>
+    <color name="santos_graphite">#141519</color>
+    <color name="santos_surface">#FFFFFFFF</color>
+    <color name="santos_surface_soft">#EAF3FA</color>
+    <color name="santos_success">#1F8F55</color>
+    <color name="santos_warning_soft">#FFF0DE</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+</resources>

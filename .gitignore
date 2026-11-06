@@ -1,0 +1,15 @@
+# Cada subprojeto tem o seu proprio .gitignore (back/.gitignore e app/.gitignore).
+# Aqui ficam apenas itens da raiz do repositorio.
+
+# IDE aberta na raiz
+/.idea/
+/.vscode/
+*.iml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos temporarios do Word (relatorio aberto)
+~$*.docx

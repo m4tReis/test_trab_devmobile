@@ -1,0 +1,37 @@
+services:
+  oracle:
+    image: gvenzl/oracle-free:23-slim-faststart
+    container_name: complexo-santos-schein-oracle
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: oracle
+      APP_USER: complexo
+      APP_USER_PASSWORD: complexo
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+  flyway:
+    image: flyway/flyway:9.22.3
+    container_name: complexo-santos-schein-flyway
+    depends_on:
+      oracle:
+        condition: service_healthy
+    environment:
+      FLYWAY_URL: jdbc:oracle:thin:@//oracle:1521/FREEPDB1
+      FLYWAY_USER: complexo
+      FLYWAY_PASSWORD: complexo
+      FLYWAY_CONNECT_RETRIES: 60
+    volumes:
+      - ./src/main/resources/db/migration:/flyway/sql:ro
+      - ./docker/flyway/drivers/ojdbc11.jar:/flyway/drivers/ojdbc11.jar:ro
+    command: migrate
+
+volumes:
+  oracle-data:
